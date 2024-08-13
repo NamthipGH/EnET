@@ -1,10 +1,17 @@
+<?php
+session_start();
+if(isset($_SESSION['id'])){
+    header("location:index.php");
+    die();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>verify</title>
 </head>
 <body>
 
@@ -12,21 +19,23 @@
     <hr>
     <div style="text-align: center;">
     <?php
-    $login= $_POST['login'];
-    $pwd= $_POST['pwd'];
-
-    if($login=="admin" &  $pwd=="ad1234") {
-        echo "ยินดีต้อนรับคุณ ADMIN";
-    } else if($login=="member" & $pwd=="mem1234"){
-        echo"ยินดีต้อนรับคุณmember";
-
-    } else{
-        echo "ชื่อบัญชีของท่านไม่ถูกต้อง";
-    }
-
-    echo"<br><a href='index.php'>กลับไปหน้าหลัก</a>"
-    
-
+        if($_POST["login"]=="admin"&& $_POST["pwd"]=="ad1234") {
+        $_SESSION['username']="admin";
+        $_SESSION['role']="a";
+        $_SESSION['id']=session_id();
+        echo "ยินดีต้อนรับคุณ ADMIN <br>";
+        echo "<a href="."index.php".">กลับไปยังหน้าหลัก</a>";
+        }
+        elseif ($_POST["login"]=="member"&& $_POST["pwd"]=="mem1234"){
+            $_SESSION['username']="member";
+            $_SESSION['role']="m";
+            $_SESSION['id']=session_id();
+            echo "ยินดีต้อนรับ MEMBER<br>";
+            echo"<a href="."index.php".">กลับไปยังหน้าหลัก</a>";
+        }else{
+            echo "ชื่อบัญชีหรือรหัสผ่านไม่ถูกต้อง <br>";
+            echo "<a href="."index.php".">กลับไปยังหน้าหลัก</a>";
+            }
     ?>
     </div>
 
